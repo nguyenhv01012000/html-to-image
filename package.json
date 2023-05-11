@@ -1,6 +1,7 @@
 {
-  "name": "myapp",
+  "name": "html-to-image",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,19 +11,6 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
-    "html-to-image": "^1.11.11",
-    "node-html-to-image": "^3.3.0",
-    "pdfcrowd": "^5.13.0",
     "puppeteer": "^20.1.2"
-  },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nguyenhv01012000/html-to-image.git"
-  },
-  "bugs": {
-    "url": "https://github.com/nguyenhv01012000/html-to-image/issues"
-  },
-  "homepage": "https://github.com/nguyenhv01012000/html-to-image#readme",
-  "description": ""
+  }
 }
