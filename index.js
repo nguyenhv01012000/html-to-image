@@ -7,7 +7,7 @@ app.use(bodyParser.text({ type: 'text/html' }))
 
 app.get('/', function (req, res) {
     (async () => {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({headless: 'new'});
         const page = await browser.newPage();
         await page.setContent( req.body );
         await page.screenshot({path: 'example.png'});
