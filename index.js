@@ -10,14 +10,20 @@ app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res) => {
-        const browser = await puppeteer.launch({headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox']});
-        const page = await browser.newPage();
-        await page.goto(req.body.url)
-        let screenshot = await page.screenshot({ encoding: "base64" });
+    try {    
+      const browser = await puppeteer.launch({headless: 'new'});
+      const page = await browser.newPage();
+      await page.goto(req.body.url)
+      let screenshot = await page.screenshot({ encoding: "base64" });
 
-        await browser.close();
-        res.send(screenshot)
-    });
+      await browser.close();
+      res.send(screenshot)
+    } catch(e) {
+        // catch errors and send error status
+        console.log(e);
+        res.sendStatus(500);
+    } 
+});
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
