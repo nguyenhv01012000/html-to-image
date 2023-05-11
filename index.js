@@ -12,7 +12,8 @@ app.get('/', function (req, res) {
         await page.setContent( req.body );
         await page.screenshot({path: 'example.png'});
       
-        await browser.close().then(res.send(fs.readFileSync('example.png', 'base64')));
+        await browser.close();
+        res.send(fs.readFileSync('example.png', 'base64'))
       })()
     });
 
