@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 app.use(forms.array()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', async (req, res) => {
+app.post('/', async (req, res) => {
     try {    
       const browser = await puppeteer.launch({headless: 'new'});
       const page = await browser.newPage();
