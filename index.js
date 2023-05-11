@@ -10,10 +10,10 @@ app.get('/', function (req, res) {
         const browser = await puppeteer.launch({headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox']});
         const page = await browser.newPage();
         await page.setContent( req.body );
-        await page.screenshot({path: 'example.png'});
-      
+        const a = await page.screenshot({ encoding: "base64" });
+
         await browser.close();
-        await res.send(fs.readFileSync('example.png', 'base64'));
+        await res.send(a);
       })()
     });
 
