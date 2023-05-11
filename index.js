@@ -9,16 +9,14 @@ app.use(bodyParser.json());
 app.use(forms.array()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', function (req, res) {
-    (async () => {
+app.get('/', async (req, res) => {
         const browser = await puppeteer.launch({headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox']});
         const page = await browser.newPage();
         await page.goto(req.body.url)
         let screenshot = await page.screenshot({ encoding: "base64" });
 
-        //await browser.close();
-        res.send({ result: screenshot })
-      })();
+        await browser.close();
+        res.send(screenshot)
     });
 
 app.listen(3000, function () {
