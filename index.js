@@ -14,11 +14,11 @@ app.get('/', function (req, res) {
         const browser = await puppeteer.launch({headless: 'new', args: ['--no-sandbox', '--disable-setuid-sandbox']});
         const page = await browser.newPage();
         await page.goto(req.body.url)
-        const a = await page.screenshot({ encoding: "base64" });
+        let screenshot = await page.screenshot({ encoding: "base64" });
 
-        await browser.close();
-        await res.send(a);
-      })()
+        //await browser.close();
+        res.send({ result: screenshot })
+      })();
     });
 
 app.listen(3000, function () {
