@@ -8,6 +8,7 @@ var forms = multer();
 app.use(bodyParser.json());
 app.use(forms.array()); 
 app.use(bodyParser.urlencoded({ extended: true }));
+const { scrapeLogic } = require("./scrapeLogic");
 
 app.post('/', async (req, res) => {
     try {    
@@ -16,13 +17,14 @@ app.post('/', async (req, res) => {
       await page.goto(req.body.url)
       let screenshot = await page.screenshot({ encoding: "base64" });
 
-      await browser.close();
       res.send(screenshot)
     } catch(e) {
         // catch errors and send error status
         console.log(e);
         res.sendStatus(500);
-    } 
+    } finally {
+      await browser.close();
+    }
 });
 
 app.listen(3000, function () {
