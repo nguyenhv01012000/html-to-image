@@ -3,6 +3,7 @@ var app = express();
 const puppeteer = require('puppeteer');
 var bodyParser = require('body-parser')
 var multer = require('multer');
+const iPhone = puppeteer.devices['iPhone 4'];
 var forms = multer();
 app.use(bodyParser.json());
 app.use(forms.array());
@@ -13,8 +14,10 @@ app.post('/', async (req, res) => {
     headless: 'new',
     executablePath: '/usr/bin/google-chrome-stable'
   });
+  
   try {
     const page = await browser.newPage();
+    await page.emulate(iPhone);
     await page.goto(req.body.url);
     // await page.setViewport({ width: parseInt(req.body.width), height: parseInt(req.body.height) });
     let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
