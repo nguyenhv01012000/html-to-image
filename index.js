@@ -8,7 +8,6 @@ var forms = multer();
 app.use(bodyParser.json());
 app.use(forms.array()); 
 app.use(bodyParser.urlencoded({ extended: true }));
-const { scrapeLogic } = require("./scrapeLogic");
 
 app.post('/', async (req, res) => {
     try {    
