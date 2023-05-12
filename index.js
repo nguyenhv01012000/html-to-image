@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/', async (req, res) => {
   const browser = await puppeteer.launch({
-    headless: 'new',
+    headless: false,
     executablePath: '/usr/bin/google-chrome-stable'
   });
   try {
