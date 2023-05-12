@@ -10,11 +10,11 @@ app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/', async (req, res) => {
+  const browser = await puppeteer.launch({
+    headless: 'new',
+    executablePath:'/usr/bin/google-chrome-stable'
+  });
   try {
-    const browser = await puppeteer.launch({
-      headless: 'new',
-      executablePath:'/usr/bin/google-chrome-stable'
-    });
     const page = await browser.newPage();
     await page.goto(req.body.url)
     let screenshot = await page.screenshot({ encoding: "base64" });
