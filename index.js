@@ -1,6 +1,5 @@
 var express = require('express');
 var app = express();
-var fs = require('fs');
 const puppeteer = require('puppeteer');
 var bodyParser = require('body-parser')
 var multer = require('multer');
@@ -12,14 +11,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post('/', async (req, res) => {
   const browser = await puppeteer.launch({
     headless: 'new',
-    executablePath:'/usr/bin/google-chrome-stable'
+    executablePath: '/usr/bin/google-chrome-stable'
   });
   try {
     const page = await browser.newPage();
-    await page.goto(req.body.url)
-    let screenshot = await page.screenshot({ encoding: "base64" });
+    await page.goto(req.body.url);
+    // await page.setViewport({ width: parseInt(req.body.width), height: parseInt(req.body.height) });
+    let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
 
-    res.send(screenshot)
+    res.send(screenshot);
   } catch (e) {
     // catch errors and send error status
     console.error(e);
