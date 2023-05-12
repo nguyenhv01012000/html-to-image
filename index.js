@@ -20,8 +20,8 @@ app.post('/', async (req, res) => {
       res.send(screenshot)
     } catch(e) {
         // catch errors and send error status
-        console.log(e);
-        res.sendStatus(500);
+        console.error(e);
+        res.send(`Something went wrong while running Puppeteer: ${e}`);
     } finally {
       await browser.close();
     }
