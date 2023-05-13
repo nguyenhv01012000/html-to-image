@@ -10,6 +10,10 @@ app.use(bodyParser.json());
 app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+  res.send("success");
+});
+
 app.post('/', async (req, res) => {
   const browser = await puppeteer.launch({
     headless: 'new',
