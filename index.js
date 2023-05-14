@@ -1,14 +1,7 @@
 var express = require('express');
 var app = express();
 const puppeteer = require('puppeteer');
-var bodyParser = require('body-parser')
-var multer = require('multer');
 //const iPhone = puppeteer.devices['iPad Mini'];
-
-var forms = multer();
-app.use(bodyParser.json());
-app.use(forms.array());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', async (req, res) => {
   const browser = await puppeteer.launch({
@@ -19,9 +12,9 @@ app.get('/', async (req, res) => {
   try {
     const page = await browser.newPage();
     //await page.emulate(iPhone);
-    await page.goto(req.body.url);
-    if(req.body.width != null && req.body.height != null)
-      await page.setViewport({ width: parseInt(req.body.width), height: parseInt(req.body.height) });
+    await page.goto(req.query.url);
+    if(req.query.width != null && req.query.height != null)
+      await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height) });
     let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
 
     res.send(screenshot);
