@@ -3,18 +3,14 @@ var app = express();
 const puppeteer = require('puppeteer');
 var bodyParser = require('body-parser')
 var multer = require('multer');
-//const iPhone = puppeteer.devices['iPad'];
+//const iPhone = puppeteer.devices['iPad Mini'];
 
 var forms = multer();
 app.use(bodyParser.json());
 app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
-  res.send("success");
-});
-
-app.post('/', async (req, res) => {
+app.get('/', async (req, res) => {
   const browser = await puppeteer.launch({
     headless: 'new',
     executablePath: '/usr/bin/google-chrome-stable'
