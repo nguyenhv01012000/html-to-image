@@ -3,6 +3,9 @@ var app = express();
 const puppeteer = require('puppeteer');
 //const iPhone = puppeteer.devices['iPad Mini'];
 
+app.get('/test', (req, res) => {
+  res.send("success");
+});
 
 app.get('/', async (req, res) => {
   const browser = await puppeteer.launch({
@@ -27,6 +30,8 @@ app.get('/', async (req, res) => {
     await browser.close();
   }
 });
+
+
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
