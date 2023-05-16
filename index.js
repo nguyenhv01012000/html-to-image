@@ -17,7 +17,7 @@ app.get('/', async (req, res) => {
   try {
     const page = await browser.newPage();
     //await page.emulate(iPhone);
-    await page.goto(req.query.url);
+    await page.goto(decodeURI(req.query.url));
     if(req.query.width != null && req.query.height != null)
       await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height) });
     let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
