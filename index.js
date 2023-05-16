@@ -3,11 +3,11 @@ var app = express();
 const puppeteer = require('puppeteer');
 //const iPhone = puppeteer.devices['iPad Mini'];
 
-app.get('/', (req, res) => {
-  res.send("success");
-});
+// app.get('/', (req, res) => {
+//   res.send("success");
+// });
 
-app.post('/', async (req, res) => {
+app.get('/', async (req, res) => {
   const browser = await puppeteer.launch({
     headless: 'new',
     executablePath: '/usr/bin/google-chrome-stable'
