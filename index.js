@@ -3,22 +3,23 @@ var app = express();
 const puppeteer = require('puppeteer');
 //const iPhone = puppeteer.devices['iPad Mini'];
 
-// app.get('/', (req, res) => {
-//   res.send("success");
-// });
+app.get('/test', (req, res) => {
+  res.send("success");
+});
 
 
 app.get('/', async (req, res) => {
+  if (req.query.url == null) return "";
   const browser = await puppeteer.launch({
     headless: 'new',
     executablePath: '/usr/bin/google-chrome-stable'
   });
-  
+
   try {
     const page = await browser.newPage();
     //await page.emulate(iPhone);
     await page.goto(decodeURI(req.query.url));
-    if(req.query.width != null && req.query.height != null)
+    if (req.query.width != null && req.query.height != null)
       await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height) });
     let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
 
