@@ -8,7 +8,7 @@ app.get('/test', (req, res) => {
 });
 
 
-app.get('/', async (req, res) => {
+app.get('/convert', async (req, res) => {
   if (req.query.url == null) return "";
   const browser = await puppeteer.launch({
     headless: 'new',
