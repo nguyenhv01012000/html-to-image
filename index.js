@@ -12,6 +12,7 @@ app.get('/convert', async (req, res) => {
   if (req.query.url == null) return "";
   const browser = await puppeteer.launch({
     headless: 'new',
+    args: ["--no-sandbox"],
     executablePath: '/usr/bin/google-chrome-stable'
   });
 
@@ -37,6 +38,7 @@ app.post('/', async (req, res) => {
   if (req.query.url == null) return "";
   const browser = await puppeteer.launch({
     headless: 'new',
+    args: ["--no-sandbox"],
     executablePath: '/usr/bin/google-chrome-stable'
   });
 
