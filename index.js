@@ -19,10 +19,11 @@ app.get('/convert', async (req, res) => {
   try {
     const page = await browser.newPage();
     //await page.emulate(iPhone);
-    await page.goto(decodeURI(req.query.url));
+    await page.goto(decodeURI(req.query.url), { waitUntil: 'domcontentloaded'});
     if (req.query.width != null && req.query.height != null)
-      await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height) });
-    let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
+      await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height), isMobile:true });
+
+    let screenshot = await page.screenshot({encoding: "base64", fullPage: true});
 
     res.send(screenshot);
   } catch (e) {
@@ -45,10 +46,11 @@ app.post('/', async (req, res) => {
   try {
     const page = await browser.newPage();
     //await page.emulate(iPhone);
-    await page.goto(decodeURI(req.query.url));
+    await page.goto(decodeURI(req.query.url), { waitUntil: 'domcontentloaded'});
     if (req.query.width != null && req.query.height != null)
-      await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height) });
-    let screenshot = await page.screenshot({ encoding: "base64", fullPage: true });
+      await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height), isMobile:true });
+
+    let screenshot = await page.screenshot({encoding: "base64", fullPage: true});
 
     res.send(screenshot);
   } catch (e) {
