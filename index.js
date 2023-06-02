@@ -1,7 +1,13 @@
 var express = require('express');
 var app = express();
 const puppeteer = require('puppeteer');
+var bodyParser = require('body-parser')
+var multer = require('multer');
 //const iPhone = puppeteer.devices['iPad Mini'];
+var forms = multer();
+app.use(bodyParser.json());
+app.use(forms.array());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/test', (req, res) => {
   res.send("success");
@@ -35,8 +41,9 @@ app.get('/convert', async (req, res) => {
   }
 });
 
-app.post('/', async (req, res) => {
-  if (req.query.url == null) return "";
+
+app.post('/convert', async (req, res) => {
+  if (req.body.url == null) return "";
   const browser = await puppeteer.launch({
     headless: 'new',
     args: ["--no-sandbox"],
@@ -46,9 +53,9 @@ app.post('/', async (req, res) => {
   try {
     const page = await browser.newPage();
     //await page.emulate(iPhone);
-    await page.goto(decodeURI(req.query.url), { waitUntil: 'domcontentloaded'});
-    if (req.query.width != null && req.query.height != null)
-      await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height), isMobile:true });
+    await page.goto(decodeURI(req.body.url), { waitUntil: 'domcontentloaded'});
+    if (req.body.width != null && req.body.height != null)
+      await page.setViewport({ width: parseInt(req.body.width), height: parseInt(req.body.height), isMobile:true });
 
     let screenshot = await page.screenshot({encoding: "base64", fullPage: true});
 
