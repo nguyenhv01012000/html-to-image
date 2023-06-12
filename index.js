@@ -15,12 +15,22 @@ app.get('/test', (req, res) => {
 
 
 app.get('/convert', async (req, res) => {
-  if (req.query.url == null) return "";
+  if (req.query.url == null) {
+    res.send("url is null");
+    return;
+  }
+
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ["--no-sandbox"],
+    args: ["--no-sandbox", "--incognito"],
+    //userDataDir: '/dev/null',
     executablePath: '/usr/bin/google-chrome-stable'
   });
+
+  if(browser == null) {
+    res.send("Browser can't create");
+    return;
+  }
 
   try {
     const page = await browser.newPage();
@@ -29,47 +39,69 @@ app.get('/convert', async (req, res) => {
     if (req.query.width != null && req.query.height != null)
       await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height), isMobile:true });
 
+    if(page == null){
+      (await browser).close()
+      res.send("No space left on device");
+    }
+    else{
     let screenshot = await page.screenshot({encoding: "base64", fullPage: true});
-
+      (await browser).close()
     res.send(screenshot);
+    }
   } catch (e) {
     // catch errors and send error status
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
+    (await browser).close();
+    res.send(`Something went wrong while running: ${e}`);
   } finally {
-    await browser.close();
+    await browser?.close();
   }
 });
 
 
 app.post('/convert', async (req, res) => {
-  if (req.body.url == null) return "";
+
+  if (req.body.url == null)  {
+    res.send("url is null");
+    return;
+  }
+
   const browser = await puppeteer.launch({
     headless: 'new',
-    args: ["--no-sandbox"],
+    args: ["--no-sandbox", "--incognito"],
+    //userDataDir: '/dev/null',
     executablePath: '/usr/bin/google-chrome-stable'
   });
 
+  if(browser == null) {
+    res.send("No space left on device");
+    return;
+  }
+
   try {
     const page = await browser.newPage();
-    //await page.emulate(iPhone);
     await page.goto(decodeURI(req.body.url), { waitUntil: 'domcontentloaded'});
     if (req.body.width != null && req.body.height != null)
       await page.setViewport({ width: parseInt(req.body.width), height: parseInt(req.body.height), isMobile:true });
 
+    if(page == null){
+      (await browser).close()
+      res.send("No space left on device");
+    }
+    else{
     let screenshot = await page.screenshot({encoding: "base64", fullPage: true});
-
+      (await browser).close()
     res.send(screenshot);
+    }
   } catch (e) {
     // catch errors and send error status
     console.error(e);
-    res.send(`Something went wrong while running Puppeteer: ${e}`);
+    (await browser).close()
+    res.send(`Something went wrong while running: ${e}`);
   } finally {
-    await browser.close();
+    await browser?.close();
   }
 });
-
-
 
 app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
