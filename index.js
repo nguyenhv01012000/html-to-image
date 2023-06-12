@@ -26,7 +26,7 @@ app.get('/convert', async (req, res) => {
   });
 
   if (browser == null) {
-    res.send("Browser can't create");
+    res.send("No space left on device");
     return;
   }
 
