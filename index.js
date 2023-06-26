@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+const path = require("path");
 const puppeteer = require('puppeteer');
 var bodyParser = require('body-parser')
 var multer = require('multer');
@@ -18,20 +19,28 @@ app.get('/convert', async (req, res) => {
     return;
   }
 
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ["--no-sandbox", "--incognito"],
-    //userDataDir: '/dev/null',
-    executablePath: '/usr/bin/google-chrome-stable'
-  });
+  let browser = null;
+
+  try{
+      browser = await puppeteer.launch({
+      headless: 'new',
+      args: ["--no-sandbox", "--incognito"],
+      //userDataDir: '/dev/null',
+      executablePath: '/usr/bin/google-chrome-stable'
+    });
+  }catch (e) {
+    // catch errors and send error status
+    console.error(e);
+    res.send(`Something went wrong while running: ${e}`);
+  }
 
   if (browser == null) {
-    res.send("No space left on device");
     return;
   }
 
   try {
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
     await page.goto(decodeURI(req.query.url), { waitUntil: 'domcontentloaded' });
     if (req.query.width != null && req.query.height != null)
       await page.setViewport({ width: parseInt(req.query.width), height: parseInt(req.query.height), isMobile: true });
@@ -63,20 +72,28 @@ app.post('/convert', async (req, res) => {
     return;
   }
 
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: ["--no-sandbox", "--incognito"],
-    //userDataDir: '/dev/null',
-    executablePath: '/usr/bin/google-chrome-stable'
-  });
+  let browser = null;
+
+  try{
+      browser = await puppeteer.launch({
+      headless: 'new',
+      args: ["--no-sandbox", "--incognito"],
+      //userDataDir: '/dev/null',
+      executablePath: '/usr/bin/google-chrome-stable'
+    });
+  }catch (e) {
+    // catch errors and send error status
+    console.error(e);
+    res.send(`Something went wrong while running: ${e}`);
+  }
 
   if (browser == null) {
-    res.send("No space left on device");
     return;
   }
 
   try {
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
     await page.goto(decodeURI(req.body.url), { waitUntil: 'domcontentloaded' });
     if (req.body.width != null && req.body.height != null)
       await page.setViewport({ width: parseInt(req.body.width), height: parseInt(req.body.height), isMobile: true });

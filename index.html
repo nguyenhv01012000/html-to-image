@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node.js File Uploader</title>
+    <style>
+        body {
+    background-color: rgb(6, 26, 27);
+}
+* {
+    box-sizing: border-box;
+}
+.container {
+    max-width: 500px;
+    margin: 60px auto;
+}
+.container h1,h2 {
+    text-align: center;
+    color: white;
+}
+form {
+    background-color: white;
+    padding: 30px;
+}
+form .input-group {
+    margin-bottom: 15px;
+}
+form label {
+    display: block;
+    margin-bottom: 10px;
+}
+form input {
+    padding: 12px 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.submit-btn {
+    width: 100%;
+    border: none;
+    background: rgb(37, 83, 3);
+    font-size: 18px;
+    color: white;
+    border-radius: 3px;
+    padding: 20px;
+    text-align: center;
+}
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Automatically Report on Shopee</h1>
+        <form id='uploadForm'>
+            <div class="input-group">
+                <label for='files'>Select files</label>
+                <input id='myFiles' type="file" multiple>
+            </div>
+            <button class="submit-btn" type='submit'>Submit</button>
+        </form>
+        <h2></h2>
+    </div>
+    <script>
+        const form = document.getElementById('uploadForm')
+
+        const sendFiles = async () => {
+            // Object 
+            const myFiles = document.getElementById('myFiles').files
+
+            const formData = new FormData()
+
+            Object.keys(myFiles).forEach(key => {
+                formData.append(myFiles.item(key).name, myFiles.item(key))
+            })
+
+            const response = await fetch('http://localhost:3000/upload', {
+                method: 'POST',
+                body: formData
+            })
+
+            const json = await response.json()
+
+            const h2 = document.querySelector('h2')
+            h2.textContent = `Trạng thái: ${json?.status}`
+
+            const h3 = document.querySelector('h3')
+            h3.textContent = json?.message
+
+            console.log(json)
+        }
+
+        form.addEventListener('submit', (e) => {
+            const h2 = document.querySelector('h2')
+            h2.textContent = ""
+            e.preventDefault()
+            sendFiles()
+        })
+    </script>
+</body>
+
+</html>
