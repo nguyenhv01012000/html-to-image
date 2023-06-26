@@ -92,9 +92,6 @@ async function autoReport(user, password, products, browser) {
       await page.waitForSelector('button[class="btn btn-solid-primary btn--s btn--inline"]')
       await page.click('button[class="btn btn-solid-primary btn--s btn--inline"]');
       await page.waitForXPath("//div[contains(text(), 'Tố cáo thành công')]");
-      await page.screenshot({
-        path: 'page.jpg'
-      });
     } catch (e) {
       // catch errors and send error status
       console.error("invalid URL:" + products[i]);
