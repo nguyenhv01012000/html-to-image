@@ -10,6 +10,9 @@ var forms = multer();
 app.use(bodyParser.json());
 app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
+var cors = require("cors");
+
+app.use(cors())
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
