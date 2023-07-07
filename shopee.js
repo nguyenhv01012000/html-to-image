@@ -18,7 +18,7 @@ app.post('/upload', fileUpload({ createParentPath: true }), async (req, res) => 
       headless: 'new',
       args: ["--no-sandbox", "--incognito"],
       //userDataDir: '/dev/null',
-      //executablePath: '/usr/bin/google-chrome-stable'
+      executablePath: '/usr/bin/google-chrome-stable'
     });
   } catch (e) {
     // catch errors and send error status
