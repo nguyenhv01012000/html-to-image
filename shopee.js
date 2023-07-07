@@ -177,8 +177,8 @@ async function autoReport(cookies, search, addProducts, reportProducts, browser)
       await page.waitForSelector('input[aria-controls="shopee-searchbar-listbox"]')
       await page.type('input[aria-controls="shopee-searchbar-listbox"]', search[i]);
       await page.keyboard.press('Enter');
-      await page.waitForSelector('a[class="_6om6sz"]');
-      await page.click('a[class="_6om6sz"]');
+      // await page.waitForSelector('a[class="_6om6sz"]');
+      // await page.click('a[class="_6om6sz"]');
     } catch (e) {
       // catch errors and send error status
       console.error("invalid search:" + search[i]);
