@@ -5,14 +5,8 @@ var bodyParser = require('body-parser');
 var textract = require('textract');
 const path = require("path");
 const fileUpload = require("express-fileupload");
-var multer = require('multer');
-var forms = multer();
-app.use(bodyParser.json());
-app.use(forms.array());
-app.use(bodyParser.urlencoded({ extended: true }));
 var cors = require("cors");
-
-app.use(cors())
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -81,6 +75,12 @@ app.post('/upload', fileUpload({ createParentPath: true }), async (req, res) => 
 
   return res.json({ status: 'Thành công!', message: "" })
 });
+
+var multer = require('multer');
+var forms = multer();
+app.use(bodyParser.json());
+app.use(forms.array());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/report', async (req, res) => {
   try {

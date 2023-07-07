@@ -75,7 +75,7 @@ form input {
                 formData.append(myFiles.item(key).name, myFiles.item(key))
             })
 
-            const response = await fetch('https://14.225.238.137:4444/upload', {
+            const response = await fetch('http://14.225.238.137:4444/upload', {
                 method: 'POST',
                 body: formData
             })
