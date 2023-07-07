@@ -52,13 +52,13 @@ form input {
 
 <body>
     <div class="container">
-        <h1>Automatically Report on Shopee</h1>
+        <h1>Tự động report sản phẩm trên Shopee</h1>
         <form id='uploadForm'>
             <div class="input-group">
                 <label for='files'>Select files</label>
                 <input id='myFiles' type="file" multiple>
             </div>
-            <button class="submit-btn" type='submit'>Submit</button>
+            <button class="submit-btn" type='submit' >Submit</button>
         </form>
         <h2></h2>
     </div>
@@ -75,7 +75,7 @@ form input {
                 formData.append(myFiles.item(key).name, myFiles.item(key))
             })
 
-            const response = await fetch('http://14.225.238.137:4444/upload', {
+            const response = await fetch('/upload', {
                 method: 'POST',
                 body: formData
             })
@@ -85,12 +85,17 @@ form input {
             const h2 = document.querySelector('h2')
             h2.textContent = `Trạng thái: ${json?.status}`
 
+            document.querySelector("button").style.background='rgb(37, 83, 3)';
+            document.querySelector("button").disabled = false;
+
             console.log(json)
         }
 
         form.addEventListener('submit', (e) => {
             const h2 = document.querySelector('h2')
-            h2.textContent = ""
+            h2.textContent = "Yêu cầu của bạn đang xử lý, xin hãy đợi!"
+            document.querySelector("button").style.background='red';
+            document.querySelector("button").disabled = true;
             e.preventDefault()
             sendFiles()
         })
