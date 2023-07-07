@@ -70,10 +70,11 @@ app.post('/upload', fileUpload({ createParentPath: true }), async (req, res) => 
         await browser?.close();
       }
 
+      return res.json({ status: 'Thành công!', message: "" });
     });
   });
 
-  return res.json({ status: 'Thành công!', message: "" })
+  return;
 });
 
 var multer = require('multer');
