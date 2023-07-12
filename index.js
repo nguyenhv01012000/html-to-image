@@ -5,6 +5,8 @@ const puppeteer = require('puppeteer');
 var bodyParser = require('body-parser')
 var multer = require('multer');
 var forms = multer();
+var os = require('os');
+
 app.use(bodyParser.json());
 app.use(forms.array());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,8 +21,11 @@ app.get('/convert', async (req, res) => {
     return;
   }
 
-  let browser = null;
+  while(os.freemem()/os.totalmem() < 0.1){
+    if(os.freemem()/os.totalmem() >= 0.1) break;
+  }
 
+  let browser = null;
   while(browser == null){
     try{
         browser = await puppeteer.launch({
@@ -68,6 +73,10 @@ app.post('/convert', async (req, res) => {
   if (req.body.url == null) {
     res.send("url is null");
     return;
+  }
+
+  while(os.freemem()/os.totalmem() < 0.1){
+    if(os.freemem()/os.totalmem() >= 0.1) break;
   }
 
   let browser = null;
