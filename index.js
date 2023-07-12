@@ -21,21 +21,19 @@ app.get('/convert', async (req, res) => {
 
   let browser = null;
 
-  try{
-      browser = await puppeteer.launch({
-      headless: 'new',
-      args: ["--no-sandbox", "--incognito"],
-      //userDataDir: '/dev/null',
-      executablePath: '/usr/bin/google-chrome-stable'
-    });
-  }catch (e) {
-    // catch errors and send error status
-    console.error(e);
-    res.send(`Something went wrong while running: ${e}`);
-  }
-
-  if (browser == null) {
-    return;
+  while(browser == null){
+    try{
+        browser = await puppeteer.launch({
+        headless: 'new',
+        args: ["--no-sandbox", "--incognito"],
+        //userDataDir: '/dev/null',
+        executablePath: '/usr/bin/google-chrome-stable'
+      });
+    }catch (e) {
+      // catch errors and send error status
+      console.error(e);
+      // res.send(`Something went wrong while running: ${e}`);
+    }
   }
 
   try {
@@ -73,22 +71,20 @@ app.post('/convert', async (req, res) => {
   }
 
   let browser = null;
-
-  try{
-      browser = await puppeteer.launch({
-      headless: 'new',
-      args: ["--no-sandbox", "--incognito"],
-      //userDataDir: '/dev/null',
-      executablePath: '/usr/bin/google-chrome-stable'
-    });
-  }catch (e) {
-    // catch errors and send error status
-    console.error(e);
-    res.send(`Something went wrong while running: ${e}`);
-  }
-
-  if (browser == null) {
-    return;
+  
+  while(browser == null){
+    try{
+        browser = await puppeteer.launch({
+        headless: 'new',
+        args: ["--no-sandbox", "--incognito"],
+        //userDataDir: '/dev/null',
+        executablePath: '/usr/bin/google-chrome-stable'
+      });
+    }catch (e) {
+      // catch errors and send error status
+      console.error(e);
+      // res.send(`Something went wrong while running: ${e}`);
+    }
   }
 
   try {
