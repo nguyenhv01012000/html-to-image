@@ -1,11 +1,11 @@
 # html-to-image
+- git clone https://github.com/nguyenhv01012000/html-to-image
 
-docker build -t html-to-image .
-docker build --network=host -t html-to-image .
-docker run -td -p 3000:3000 html-to-image
+- Cài docker
 
-docker build --network=host -t report-shopee .
-docker run -td -p 4444:3000 report-shopee
-sudo service docker restart
-docker system prune -a
-cd /home/ezpics/domains/createimage.ezpics.vn/public_html
+- vào folder chứa code 
+
+- Build: docker build --network=host -t html-to-image .
+
+- Start server: docker run -td -p 3000:3000 html-to-image
+
